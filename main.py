@@ -25,12 +25,25 @@ while True:
         player = 1
     else:
         player = 2
+
+    valid_turn = False
     
     print(piles)
 
     print("Player: " + str(player))
     choose = int(input("Choose the pile you want to take from: "))-1
-    num = int(input("Choose the number of coins you want to take: "))
+
+    while not valid_turn:
+        num = abs(int(input("Choose the number of coins you want to take: ")))
+
+        if num > piles[choose]:
+            print("Player " + str(player) + " is stuuupid!")
+            print("Please take less coins!")
+        elif -1 < num < 1:
+            print("Player " + str(player) + " is stuuupid!")
+            print("Please take more coins!")
+        else:
+            valid_turn = True
 
     piles = turn(piles, choose, num)
 
