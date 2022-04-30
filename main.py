@@ -1,7 +1,7 @@
 import random
 
 piles = [0, 0, 0]
-random_piles = int(input("Do you want to play with random piles? "))
+random_piles = int(input("Do you want to play with random piles? ")) # 0: No random piles; 1: Random piles
 player = 2
 winner = 0
 
