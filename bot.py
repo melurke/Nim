@@ -42,20 +42,15 @@ def nimSum(piles):
     return int(XOR(XOR(str(bin_piles[0]), str(bin_piles[1])), str(bin_piles[2])))
 
 def bot_turn(piles, nim_sum):
-    piles.sort()
-    test_piles = [piles[0], piles[1], piles[2]]
-    new_pile = piles[-1]
-    if nimSum == 0:
-        new_pile -= 1
-        piles[-1] = new_pile
+    if nim_sum == 0:
+        piles[2] -= 1
     else:
-        for pile in test_piles:
-            new_pile = int(str(XOR(str(bin(pile))[2:], str(nim_sum))), 2)
-            test_piles[test_piles.index(pile)] = new_pile
-            new_nim_sum = nimSum(test_piles)
-            if new_nim_sum:
-                piles[piles.index(pile)] = new_pile
-                break
+        for l in range(0, len(piles)):
+            for i in range(1, piles[l]+1):
+                piles[l] -= i
+                if nimSum(piles) == 0:
+                    break
+                piles[l] += i
     return piles
 
 while True:
@@ -70,7 +65,6 @@ while True:
     piles.sort()
     
     print(piles)
-    print(nim_sum)
 
     print("Player: " + str(player))
 
