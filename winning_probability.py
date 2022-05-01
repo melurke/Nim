@@ -130,7 +130,7 @@ for a in range(min, max+1):
                 print(str(a/max))
     else:
         combinations.append([a])
-        print(str(a/num_of_piles))
+        print(str(a/max))
 
 for i in range(0, len(combinations)):
     combinations[i] = combinations[i][:num_of_piles]
