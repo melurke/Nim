@@ -1,20 +1,21 @@
 import random
 
-piles = [0, 0, 0]
+piles = []
 random_piles = int(input("Do you want to play with random piles? ")) # 0: No random piles; 1: Random piles
+num_of_piles = int(input("How many piles should the game have? "))
 player = 2
 winner = 0
 nim_sum = 0
 
 if random_piles == 0:
-    piles[0] = int(input("How big should pile 1 be? "))
-    piles[1] = int(input("How big should pile 2 be? "))
-    piles[2] = int(input("How big should pile 3 be? "))
+    for i in range(1, num_of_piles+1):
+        piles.append(int(input(f"How big should pile {i} be? ")))
 else:
     min = int(input("What should the minimum amount of coins in each pile be? "))
     max = int(input("What should the maximum amount of coins in each pile be? "))
     
-    piles = [random.randint(min, max), random.randint(min, max), random.randint(min, max)]
+    for i in range(0, num_of_piles):
+        piles.append(random.randint(min, max))
 
 def turn(piles, choose, num):
     piles[choose] -= num
@@ -38,12 +39,17 @@ def XOR(num1, num2):
     return num
 
 def nimSum(piles):
-    bin_piles = [int(str(bin(piles[0])[2:])), int(str(bin(piles[1])[2:])), int(str(bin(piles[2])[2:]))]
-    return int(XOR(XOR(str(bin_piles[0]), str(bin_piles[1])), str(bin_piles[2])))
+    bin_piles = []
+    for i in range(0, len(piles)):
+        bin_piles.append(int(str(bin(piles[i])[2:])))
+    nim_sum = str(bin_piles[0])
+    for i in range(1, len(bin_piles)):
+        nim_sum = XOR(nim_sum, str(bin_piles[i]))
+    return int(nim_sum)
 
 def bot_turn(piles, nim_sum):
     if nim_sum == 0:
-        piles[2] -= 1
+        piles[-1] -= 1
     else:
         for l in range(0, len(piles)):
             for i in range(1, piles[l]+1):
@@ -61,7 +67,9 @@ while True:
 
     valid_turn = False
     nim_sum = nimSum(piles)
-    bin_piles = [int(str(bin(piles[0])[2:])), int(str(bin(piles[1])[2:])), int(str(bin(piles[2])[2:]))]
+    bin_piles = []
+    for i in range(0, num_of_piles):
+        bin_piles.append(int(str(bin(piles[i])[2:])))
     piles.sort()
     
     print(piles)
@@ -86,7 +94,7 @@ while True:
     else:
         piles = bot_turn(piles, nim_sum)
 
-    if piles == [0, 0, 0]:
+    if piles == ([0] * num_of_piles):
         winner = player
         break
 
