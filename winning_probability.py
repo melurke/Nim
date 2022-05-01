@@ -146,4 +146,4 @@ for combination in combinations:
         nim_sums += 1
     total += 1
 
-print("The propability of the player beginning winning is " + str((nim_sums/total)*100) + "%")
+print("The propability of the player beginning winning is " + str(((1-nim_sums/total))*100) + "%")
